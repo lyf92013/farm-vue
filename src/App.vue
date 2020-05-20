@@ -1,28 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header></Header>
+    <b-container fluid>
+      <b-row>
+        <div class="mx-auto col-xl-5 col-lg-6 col-md-7 col-sm-8 col-xs-9">
+          <BasicInfo class="my-4"></BasicInfo>
+          <M101 v-if="model === 'M101'" class="my-4"></M101>
+          <M201 v-else-if="model === 'M201'" class="my-4"></M201>
+          <M204 v-else-if="model === 'M204'" class="my-4"></M204>
+          <router-view class="my-4"></router-view>
+        </div>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from "./components/Header";
+import BasicInfo from "./components/BasicInfo";
+import M101 from "./components/M101";
+import M201 from "./components/M201";
+import M204 from "./components/M204";
+import { mapState } from 'vuex'
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
+    Header,
+    BasicInfo,
+    M101,
+    M201,
+    M204
+  },
+  computed: {
+    ...mapState(["model"])
   }
-}
+};
 </script>
 
-<style>
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: rgb(245, 245, 245);
 }
 </style>
