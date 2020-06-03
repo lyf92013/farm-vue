@@ -1,10 +1,10 @@
 <template>
-  <b-card class="shadow" header="出貨">
+  <b-card class="shadow" header="生產">
     <b-input-group prepend="客戶" class="mt-3">
       <b-form-input v-model="client"></b-form-input>
     </b-input-group>
 
-    <b-input-group prepend="出貨人" class="mt-4">
+    <b-input-group prepend="生產人員" class="mt-4">
       <b-form-select v-model="executor" :options="executors"></b-form-select>
     </b-input-group>
 
@@ -22,7 +22,7 @@ import { mapState, mapMutations } from "vuex";
 import configMixins from "../configMixins";
 
 export default {
-  name: "Ship",
+  name: "Produce",
   mixins: [configMixins],
   data() {
     return {
@@ -38,16 +38,22 @@ export default {
     "ssid",
     "model",
     "espVer",
+    "dataFrequencyID",
     "sensorData",
     "flowType"
   ]),
   mounted() {
-    this.updateTitle("出貨");
+    this.updateTitle("生產");
+  },
+  watch: {
+    dataFrequencyID() {
+      clearTimeout(this.dataFrequencyID);
+    }
   },
   methods: {
     ...mapMutations(["updateTitle"]),
     saveOnSheet() {
-      let table = `出貨-${this.model}`;
+      let table = `生產-${this.model}`;
       let completeDate = new Date().toLocaleDateString("zh-TW");
       let data = this.sensorData.replace(/,/g, " - ");
 
@@ -60,14 +66,15 @@ export default {
         this.executor,
         this.remarks
       ];
-      if ((`M201,M204`).indexOf(this.model) > 0) {
+      if (`M201,M204`.indexOf(this.model) >= 0) {
         recordData.splice(4, 0, this.flowType);
       }
       this.mqttClient.publish(this.PING, setTimeCmd(1, 0)); // set 1 minute
       googleSheet.sheetInit(this.sheetUrl, table);
       googleSheet.sheetWriteData("last", recordData);
-      alert("儲存成功 !");
-      location.reload();
+      setTimeout(() => {
+        location.reload();
+      }, 100);
     }
   }
 };

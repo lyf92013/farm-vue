@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Entry from '../views/Entry.vue'
-import Ship from '../views/Ship.vue'
+import Produce from '../views/Produce.vue'
 import Repair from '../views/Repair.vue'
 
 Vue.use(VueRouter)
@@ -13,9 +13,9 @@ const routes = [
     component: Entry
   },
   {
-    path: '/ship',
-    name: 'Ship',
-    component: Ship
+    path: '/produce',
+    name: 'Produce',
+    component: Produce
   },
   {
     path: '/repair',

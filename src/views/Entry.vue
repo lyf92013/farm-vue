@@ -5,7 +5,7 @@
       <b-container>
         <b-row>
           <b-col>
-            <b-button class="mt-3" size="lg" variant="outline-success" block @click="direct('ship')">出貨</b-button>
+            <b-button class="mt-3" size="lg" variant="outline-success" block @click="direct('produce')">生產</b-button>
           </b-col>
           <b-col>
             <b-button class="mt-3" size="lg" variant="outline-danger" block @click="direct('repair')">維修</b-button>

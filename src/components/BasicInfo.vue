@@ -27,7 +27,7 @@
           :header-text-variant="'light'"
         >
           <b-icon-exclamation-triangle-fill variant="danger"></b-icon-exclamation-triangle-fill>
-          <span> 開發板保持上線狀態。</span>
+          <span>開發板保持上線狀態。</span>
           <template v-slot:modal-footer>
             <div>
               <b-button variant="primary" size="sm" class="float-right" @click="upgradeESP">更新</b-button>
@@ -113,13 +113,13 @@ export default {
           if (res.ok) {
             console.log(`upgrade ESP...`);
             this.mqttClient.publish(this.PING, upgradeCmd(urlCmd));
-            this.$bvModal.hide('upgradeESP')
+            this.$bvModal.hide("upgradeESP");
           }
         })
         .catch(function(err) {
           console.log(err);
         });
-      
+
     }
   }
 };

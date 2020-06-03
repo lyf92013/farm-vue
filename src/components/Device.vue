@@ -60,6 +60,7 @@ export default {
       "updateOnline",
       "updateEspVer",
       "updateFw",
+      "updateDataFrequency",
       "updateSensorData",
       "updateFlowType"
     ]),
@@ -71,6 +72,15 @@ export default {
             this.mqttClient.publish(PING, miniVerCmd);
             this.mqttClient.publish(PING, setTimeCmd(0, 1));
             this.mqttClient.publish(PING, espVerCmd);
+
+            // 綁定裝置20秒後，資料頻率自動設為1分鐘
+            let dataFrequencyID  = setTimeout(() => {
+              this.mqttClient.publish(
+                PING,
+                setTimeCmd(1, 0)
+              );
+            }, 20000);
+            this.updateDataFrequency(dataFrequencyID);
           }, 100);
         } else {
           this.updateOnline(false);
