@@ -15,9 +15,8 @@ import configMixins from "../configMixins";
 import {
   espVerCmd,
   miniVerCmd,
-  setTimeCmd,
   setupOverCmd,
-  showCmd
+  cmdToArray
 } from "../mqttConf";
 
 let STATUS, PING, PONG, CHANNEL;
@@ -70,18 +69,14 @@ export default {
           this.updateOnline(true);
           setTimeout(() => {
             this.mqttClient.publish(PING, miniVerCmd);
-            this.mqttClient.publish(PING, setTimeCmd(0, 1));
             this.mqttClient.publish(PING, espVerCmd);
-
-            // 綁定裝置20秒後，資料頻率自動設為1分鐘
-            let dataFrequencyID  = setTimeout(() => {
-              this.mqttClient.publish(
-                PING,
-                setTimeCmd(1, 0)
-              );
-            }, 20000);
-            this.updateDataFrequency(dataFrequencyID);
           }, 100);
+
+          // 每秒更新一次資料(不會寫入資料庫)
+          setInterval(()=> {
+            this.mqttClient.publish(PING, cmdToArray("refresh=true"));
+          }, 1000);
+          
         } else {
           this.updateOnline(false);
         }
@@ -95,7 +90,6 @@ export default {
         // report version
         if (msg[0] == 0xf9) {
           this.mqttClient.publish(PING, miniVerCmd);
-          this.mqttClient.publish(PING, setTimeCmd);
         } else if (msg[0] == 0xf0) {
           // ESP version
           if (msg[1] == 0x71) {
@@ -119,7 +113,7 @@ export default {
               this.updateFw(info);
 
               if (this.model == "M201") {
-                this.mqttClient.publish(PING, showCmd);
+                this.mqttClient.publish(PING, cmdToArray("show=true"));
               }
             } else if (msg[3] == 3) {
               // setup over

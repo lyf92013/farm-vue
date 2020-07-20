@@ -15,7 +15,6 @@ export default new Vuex.Store({
     online: false,
     miniVer: "-",
     model: "-",
-    dataFrequencyID: null,
     deviceData: "-",
     sensorData: "-",
     flowType: null,
@@ -46,9 +45,6 @@ export default new Vuex.Store({
     updateFw(state, fw) {
       state.miniVer = fw.miniVer;
       state.model = fw.model;
-    },
-    updateDataFrequency(state, id){
-      state.dataFrequencyID = id;
     },
     updateSensorData(state, data) {
       state.sensorData = data;

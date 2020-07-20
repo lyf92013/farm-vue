@@ -41,12 +41,12 @@
     <b-row class="py-3">
       <b-col>Mini版本：{{miniVer}}</b-col>
       <b-col>
-        <b-input-group>
+        <!-- <b-input-group>
           <b-form-select v-model="firmware" :options="firmwares"></b-form-select>
           <b-input-group-append>
             <b-button variant="danger" type="button" @click="burnMini">燒錄</b-button>
           </b-input-group-append>
-        </b-input-group>
+        </b-input-group> -->
       </b-col>
     </b-row>
   </b-card>

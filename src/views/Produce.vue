@@ -38,17 +38,11 @@ export default {
     "ssid",
     "model",
     "espVer",
-    "dataFrequencyID",
     "sensorData",
     "flowType"
   ]),
   mounted() {
     this.updateTitle("生產");
-  },
-  watch: {
-    dataFrequencyID() {
-      clearTimeout(this.dataFrequencyID);
-    }
   },
   methods: {
     ...mapMutations(["updateTitle"]),

@@ -30,7 +30,7 @@
 
 <script>
 import configMixins from "../configMixins";
-import { relayOnCmd, relayOffCmd, showCmd } from "../mqttConf";
+import { cmdToArray } from "../mqttConf";
 import { mapState, mapMutations } from "vuex";
 
 export default {
@@ -84,13 +84,13 @@ export default {
       this.selectType = this.flowType;
 
       this.mqttClient.publish(this.PING, flowTypeCmd);
-      this.mqttClient.publish(this.PING, showCmd);
+      this.mqttClient.publish(this.PING, cmdToArray("show=true"));
     },
     switchRelay() {
       if (this.relayStatus) {
-        this.mqttClient.publish(this.PING, relayOffCmd);
+        this.mqttClient.publish(this.PING, cmdToArray("off=true"));
       } else {
-        this.mqttClient.publish(this.PING, relayOnCmd);
+        this.mqttClient.publish(this.PING, cmdToArray("on=true"));
       }
     }
   }

@@ -138,16 +138,10 @@ export default {
     "ssid",
     "model",
     "espVer",
-    "dataFrequencyID",
     "sensorData"
   ]),
   mounted() {
     this.updateTitle("維修");
-  },
-  watch: {
-    dataFrequencyID() {
-      clearTimeout(this.dataFrequencyID);
-    }
   },
   methods: {
     ...mapMutations(["updateTitle"]),
