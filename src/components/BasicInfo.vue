@@ -46,7 +46,7 @@
           <b-input-group-append>
             <b-button variant="danger" type="button" @click="burnMini">燒錄</b-button>
           </b-input-group-append>
-        </b-input-group> -->
+        </b-input-group>-->
       </b-col>
     </b-row>
   </b-card>
@@ -62,11 +62,11 @@ export default {
   name: "BasicInfo",
   mixins: [configMixins],
   components: {
-    Device
+    Device,
   },
   data() {
     return {
-      firmware: null
+      firmware: null,
     };
   },
   computed: {
@@ -77,13 +77,13 @@ export default {
       "espVer",
       "online",
       "miniVer",
-      "model"
+      "model",
     ]),
     getModelText() {
       if (this.model == "-") return "-";
-      let modelInfo = this.firmwares.find(e => e.value == this.model);
+      let modelInfo = this.firmwares.find((e) => e.value == this.model);
       return modelInfo.text;
-    }
+    },
   },
   methods: {
     showUpgradeModal() {
@@ -91,37 +91,36 @@ export default {
     },
     burnMini() {
       let url = `${this.firmwareUrl}/iFarm-${this.firmware}.bin`;
-      let urlCmd = url.split(``).map(cht => cht.charCodeAt(0));
+      let urlCmd = url.split(``).map((cht) => cht.charCodeAt(0));
 
       fetch(url)
-        .then(res => {
+        .then((res) => {
           if (res.ok) {
             console.log(`burn firmware...`);
             this.mqttClient.publish(this.PING, burnCmd(urlCmd));
           }
         })
-        .catch(function(err) {
-          console.log(err);
+        .catch((err) => {
+          console.log(`停止燒錄mini: ${err}`);
         });
     },
     upgradeESP() {
       let url = `${this.espUrl}/${this.ssid}.bin`;
-      let urlCmd = url.split(``).map(cht => cht.charCodeAt(0));
+      let urlCmd = url.split(``).map((cht) => cht.charCodeAt(0));
 
       fetch(url)
-        .then(res => {
+        .then((res) => {
           if (res.ok) {
-            console.log(`upgrade ESP...`);
+            console.log(`更新ESP...`);
             this.mqttClient.publish(this.PING, upgradeCmd(urlCmd));
             this.$bvModal.hide("upgradeESP");
           }
         })
-        .catch(function(err) {
-          console.log(err);
+        .catch((err) => {
+          console.log(`停止更新ESP: ${err}`);
         });
-
-    }
-  }
+    },
+  },
 };
 </script>
 

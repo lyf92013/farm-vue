@@ -19,7 +19,7 @@ import {
   cmdToArray
 } from "../mqttConf";
 
-let STATUS, PING, PONG, CHANNEL;
+let STATUS, PING, PONG, CHANNEL, intervalID;
 
 export default {
   name: "Device",
@@ -73,7 +73,7 @@ export default {
           }, 100);
 
           // 每秒更新一次資料(不會寫入資料庫)
-          setInterval(()=> {
+          intervalID = setInterval(()=> {
             this.mqttClient.publish(PING, cmdToArray("refresh=true"));
           }, 1000);
           
@@ -178,6 +178,7 @@ export default {
       console.log(`SSID:`, this.ssid, `DeviceID:`, this.deviceId);
     },
     bindDevice() {
+      clearInterval(intervalID);
       this.resetView();
       this.getDeviceID();
       STATUS = this.deviceId + "/STATUS";

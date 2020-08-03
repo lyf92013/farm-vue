@@ -2,7 +2,7 @@ export default {
   data() {
     return {
       websocketUrl: "wss://ws.webduino.cc/mqtt",
-      espUrl: "http://www.webduino.tw/farm/keyes",
+      espUrl: "http://www.ilaopo.xyz/~rick/farm/latest",
       firmwareUrl: "http://download.webduino.tw",
       sheetUrl: "https://docs.google.com/spreadsheets/d/1-7YyPu7nG5fYYg7ktjXFK5qU5EDHCcgqnLtidKI_njA/edit?usp=sharing",
       executors: ["阿元", "朝昇", "智佳", "Eric"],
@@ -14,6 +14,10 @@ export default {
         {
           value: "M101",
           text: "環境傳感器"
+        },
+        {
+          value: "M105",
+          text: "冷鏈物流傳感器"
         },
         {
           value: "M201",
